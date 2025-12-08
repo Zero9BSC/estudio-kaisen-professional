@@ -4,7 +4,8 @@ const Button = ({ children, variant = "primary", className = "", ...props }) => 
   const variants = {
     primary: "bg-secondary hover:bg-accent text-white",
     outline: "border-2 border-primary text-primary hover:bg-primary hover:text-white",
-    dark: "bg-primary hover:bg-dark text-white"
+    dark: "bg-primary hover:bg-dark text-white",
+    figma: "bg-white text-gray-900 hover:bg-gray-100 font-semibold text-sm py-2 px-5" // Nueva variante
   };
 
   return (

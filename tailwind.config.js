@@ -17,11 +17,21 @@ export default {
           100: '#E5E7EB',
           500: '#686868',
           900: '#111827',
-        }
+        },
+        
+        // Colores de Figma (para usar con clases de Tailwind)
+        'figma-navbar-bg': 'var(--primitives-color-ebony-light)',
+        'figma-navbar-text': 'var(--primitives-color-white)',
+        'figma-ebony': 'var(--primitives-color-ebony)',
       },
       fontFamily: {
         'heading': ['Fraunces', 'serif'],
         'body': ['Inter', 'sans-serif'],
+        'heading-h1': ['Fraunces', 'serif'],
+        'text-regular-normal': ['Inter', 'sans-serif'],
+      },
+      spacing: {
+        'page-padding': 'var(--spacing-sizing-page-padding-padding-global)',
       },
     },
   },

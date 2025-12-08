@@ -1,9 +1,132 @@
+/* Importa las fuentes */
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
 
+/* Tailwind base */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* Variables CSS de Figma (tailwind.css) */
+:root {
+  --color-schemes-color-scheme-1-accent: var(--primitives-color-white);
+  --color-schemes-color-scheme-1-background: var(--primitives-color-ebony-light);
+  --color-schemes-color-scheme-1-border: var(--primitives-opacity-white-20);
+  --color-schemes-color-scheme-1-foreground: var(--primitives-color-ebony-light);
+  --color-schemes-color-scheme-1-text: var(--primitives-color-white);
+  --color-schemes-color-scheme-2-accent: var(--primitives-color-ebony);
+  --color-schemes-color-scheme-2-background: var(--primitives-color-ebony-lightest);
+  --color-schemes-color-scheme-2-border: var(--primitives-opacity-neutral-darkest-15);
+  --color-schemes-color-scheme-2-foreground: var(--primitives-color-ebony-lightest);
+  --color-schemes-color-scheme-2-text: var(--primitives-color-neutral-darkest);
+  --color-schemes-color-scheme-3-accent: var(--primitives-color-ebony);
+  --color-schemes-color-scheme-3-background: var(--primitives-color-white);
+  --color-schemes-color-scheme-3-border: var(--primitives-opacity-neutral-darkest-15);
+  --color-schemes-color-scheme-3-foreground: var(--primitives-color-white);
+  --color-schemes-color-scheme-3-text: var(--primitives-color-neutral-darkest);
+  --color-schemes-color-scheme-4-accent: var(--primitives-color-ebony);
+  --color-schemes-color-scheme-4-background: var(--primitives-color-pizazz-lightest);
+  --color-schemes-color-scheme-4-border: var(--primitives-opacity-neutral-darkest-15);
+  --color-schemes-color-scheme-4-foreground: var(--primitives-color-pizazz-lightest);
+  --color-schemes-color-scheme-4-text: var(--primitives-color-neutral-darkest);
+  --color-schemes-color-scheme-5-accent: var(--primitives-color-white);
+  --color-schemes-color-scheme-5-background: var(--primitives-color-ebony-dark);
+  --color-schemes-color-scheme-5-border: var(--primitives-opacity-white-20);
+  --color-schemes-color-scheme-5-foreground: var(--primitives-color-ebony-dark);
+  --color-schemes-color-scheme-5-text: var(--primitives-color-white);
+  
+  /* Primitives colors */
+  --primitives-color-blue-marguerite: rgba(106, 90, 205, 1);
+  --primitives-color-blue-marguerite-dark: rgba(84, 72, 164, 1);
+  --primitives-color-blue-marguerite-darker: rgba(42, 36, 82, 1);
+  --primitives-color-blue-marguerite-darkest: rgba(31, 27, 61, 1);
+  --primitives-color-blue-marguerite-light: rgba(150, 139, 220, 1);
+  --primitives-color-blue-marguerite-lighter: rgba(225, 222, 245, 1);
+  --primitives-color-blue-marguerite-lightest: rgba(240, 238, 250, 1);
+  --primitives-color-ebony: rgba(16, 22, 36, 1);
+  --primitives-color-ebony-dark: rgba(12, 17, 28, 1);
+  --primitives-color-ebony-darker: rgba(6, 8, 14, 1);
+  --primitives-color-ebony-darkest: rgba(4, 6, 10, 1);
+  --primitives-color-ebony-light: rgba(87, 91, 101, 1); /* ¡ESTE ES EL COLOR DE LA NAVBAR! #575b65 */
+  --primitives-color-ebony-lighter: rgba(207, 208, 211, 1);
+  --primitives-color-ebony-lightest: rgba(231, 231, 233, 1);
+  --primitives-color-neutral: rgba(130, 130, 132, 1);
+  --primitives-color-neutral-dark: rgba(80, 80, 83, 1);
+  --primitives-color-neutral-darker: rgba(30, 30, 34, 1);
+  --primitives-color-neutral-darkest: rgba(5, 5, 10, 1);
+  --primitives-color-neutral-light: rgba(180, 180, 181, 1);
+  --primitives-color-neutral-lighter: rgba(217, 217, 218, 1);
+  --primitives-color-neutral-lightest: rgba(242, 242, 242, 1);
+  --primitives-color-pizazz: rgba(250, 140, 1, 1);
+  --primitives-color-pizazz-dark: rgba(200, 112, 0, 1);
+  --primitives-color-pizazz-darker: rgba(100, 56, 0, 1);
+  --primitives-color-pizazz-darkest: rgba(75, 42, 0, 1);
+  --primitives-color-pizazz-light: rgba(251, 174, 77, 1);
+  --primitives-color-pizazz-lighter: rgba(254, 232, 204, 1);
+  --primitives-color-pizazz-lightest: rgba(254, 243, 229, 1);
+  --primitives-color-sea-green: rgba(46, 139, 87, 1);
+  --primitives-color-sea-green-dark: rgba(36, 111, 69, 1);
+  --primitives-color-sea-green-darker: rgba(18, 55, 34, 1);
+  --primitives-color-sea-green-darkest: rgba(13, 41, 26, 1);
+  --primitives-color-sea-green-light: rgba(108, 173, 137, 1);
+  --primitives-color-sea-green-lighter: rgba(213, 231, 221, 1);
+  --primitives-color-sea-green-lightest: rgba(234, 243, 238, 1);
+  --primitives-color-white: rgba(255, 255, 255, 1);
+  
+  /* Opacities */
+  --primitives-opacity-neutral-darkest-10: rgba(5, 5, 10, 0.1);
+  --primitives-opacity-neutral-darkest-15: rgba(5, 5, 10, 0.15);
+  --primitives-opacity-neutral-darkest-20: rgba(5, 5, 10, 0.2);
+  --primitives-opacity-neutral-darkest-30: rgba(5, 5, 10, 0.3);
+  --primitives-opacity-neutral-darkest-40: rgba(5, 5, 10, 0.4);
+  --primitives-opacity-neutral-darkest-5: rgba(5, 5, 10, 0.05);
+  --primitives-opacity-neutral-darkest-50: rgba(5, 5, 10, 0.5);
+  --primitives-opacity-neutral-darkest-60: rgba(5, 5, 10, 0.6);
+  --primitives-opacity-transparent: rgba(255, 255, 255, 0);
+  --primitives-opacity-white-10: rgba(255, 255, 255, 0.1);
+  --primitives-opacity-white-15: rgba(255, 255, 255, 0.15);
+  --primitives-opacity-white-20: rgba(255, 255, 255, 0.2);
+  --primitives-opacity-white-30: rgba(255, 255, 255, 0.3);
+  --primitives-opacity-white-40: rgba(255, 255, 255, 0.4);
+  --primitives-opacity-white-5: rgba(255, 255, 255, 0.05);
+  --primitives-opacity-white-50: rgba(255, 255, 255, 0.5);
+  --primitives-opacity-white-60: rgba(255, 255, 255, 0.6);
+  
+  /* Spacing */
+  --spacing-sizing-page-padding-padding-global: 64px;
+  
+  /* Typography */
+  --heading-h1-font-family: "Fraunces", Helvetica;
+  --text-regular-normal-font-family: "Inter", Helvetica;
+  --text-regular-normal-font-size: 18px;
+  --text-regular-normal-font-weight: 400;
+  --text-regular-normal-letter-spacing: 0px;
+  --text-regular-normal-line-height: 150%;
+  --text-regular-normal-font-style: normal;
+  
+  --text-regular-medium-font-family: "Inter", Helvetica;
+  --text-regular-medium-font-size: 18px;
+  --text-regular-medium-font-weight: 500;
+  --text-regular-medium-letter-spacing: 0px;
+  --text-regular-medium-line-height: 150%;
+  --text-regular-medium-font-style: normal;
+}
+
+/* Clases utilitarias */
+@layer components {
+  .btn-primary {
+    @apply px-6 py-3 font-medium text-white transition-colors rounded-lg bg-secondary hover:bg-accent;
+  }
+  
+  .btn-outline {
+    @apply px-6 py-3 font-medium transition-colors border-2 rounded-lg border-primary text-primary hover:bg-primary hover:text-white;
+  }
+  
+  .section-padding {
+    @apply py-12 md:py-20;
+  }
+}
+
+/* Base styles */
 @layer base {
   html {
     font-family: 'Inter', sans-serif;
@@ -12,19 +135,5 @@
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Fraunces', serif;
     font-weight: 700;
-  }
-}
-
-@layer components {
-  .btn-primary {
-    @apply bg-secondary hover:bg-accent text-white font-medium py-3 px-6 rounded-lg transition-colors;
-  }
-  
-  .btn-outline {
-    @apply border-2 border-primary text-primary hover:bg-primary hover:text-white font-medium py-3 px-6 rounded-lg transition-colors;
-  }
-  
-  .section-padding {
-    @apply py-12 md:py-20;
   }
 }

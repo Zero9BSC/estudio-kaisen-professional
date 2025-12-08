@@ -8,20 +8,22 @@ import ContactPage from './pages/ContactPage';
 
 function App() {
   return (
-    <Router>
-      <div className="min-h-screen flex flex-col">
-        <Header />
-        <main className="flex-grow">
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/servicios" element={<ServicesPage />} />
-            <Route path="/nosotros" element={<AboutPage />} />
-            <Route path="/contacto" element={<ContactPage />} />
-          </Routes>
-        </main>
-        <Footer />
-      </div>
-    </Router>
+    <div data-typography-mode="desktop" data-spacing-sizing-mode="desktop">
+      <Router>
+        <div className="flex flex-col min-h-screen">
+          <Header />
+          <main className="flex-grow">
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/servicios" element={<ServicesPage />} />
+              <Route path="/nosotros" element={<AboutPage />} />
+              <Route path="/contacto" element={<ContactPage />} />
+            </Routes>
+          </main>
+          <Footer />
+        </div>
+      </Router>
+    </div>
   );
 }
 
