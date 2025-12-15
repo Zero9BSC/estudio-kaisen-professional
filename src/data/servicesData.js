@@ -1,3 +1,15 @@
+// src/data/servicesData.js
+import { 
+  TrendingUp, 
+  Target, 
+  Scale, 
+  Users,
+  DollarSign,
+  BarChart3,
+  FileText,
+  GraduationCap 
+} from 'lucide-react';
+
 export const services = [
   {
     id: 1,
@@ -9,7 +21,9 @@ export const services = [
       "Proyección de presupuestos",
       "Análisis de rentabilidad"
     ],
-    icon: "💰"
+    iconName: "DollarSign", // Nombre del ícono, no el componente
+    category: "Finanzas",
+    color: "blue"
   },
   {
     id: 2,
@@ -21,7 +35,9 @@ export const services = [
       "Evaluación de riesgos",
       "Planes de crecimiento"
     ],
-    icon: "📈"
+    iconName: "Target",
+    category: "Estrategia", 
+    color: "purple"
   },
   {
     id: 3,
@@ -33,7 +49,9 @@ export const services = [
       "Asesoramiento societario",
       "Trámites regulatorios"
     ],
-    icon: "⚖️"
+    iconName: "Scale",
+    category: "Legal",
+    color: "green"
   },
   {
     id: 4,
@@ -45,7 +63,9 @@ export const services = [
       "Teambuilding",
       "Desarrollo organizacional"
     ],
-    icon: "👥"
+    iconName: "Users",
+    category: "Desarrollo",
+    color: "orange"
   }
 ];
 
