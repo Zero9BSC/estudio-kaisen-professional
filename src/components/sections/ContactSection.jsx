@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Button from '../ui/Button';
 import Card from '../ui/Card';
-import { Mail, Phone, MapPin, Clock } from 'lucide-react';
+import { Mail, Phone, MapPin, Clock, MessageCircle } from 'lucide-react';
 
 const ContactSection = () => {
   const [formData, setFormData] = useState({
@@ -27,26 +27,49 @@ const ContactSection = () => {
     });
   };
 
+  // Función para abrir WhatsApp
+  const openWhatsApp = () => {
+    const phoneNumber = "+5492804366867";
+    const message = "Hola, me gustaría obtener más información sobre sus servicios.";
+    const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+    window.open(url, '_blank');
+  };
+
+  // Función para llamar
+  const makeCall = () => {
+    window.location.href = 'tel:+542804421137';
+  };
+
   const contactInfo = [
     {
       icon: <MapPin size={24} />,
       title: 'Dirección',
-      content: 'Estamos sobre 9 de Julio N.º 128, 1° piso "A" (Edificio Iberia). Entre Belgrano y Rivadavia, Trelew.'
+      content: 'Estamos sobre 9 de Julio N.º 128, 1° piso "A" (Edificio Iberia). Entre Belgrano y Rivadavia, Trelew.',
+      action: null
     },
     {
       icon: <Phone size={24} />,
       title: 'Teléfono',
-      content: '+54 280 442-1137'
+      content: '+54 280 442-1137',
+      action: makeCall
     },
     {
       icon: <Mail size={24} />,
       title: 'Email',
-      content: 'estudiokaisentrelew@gmail.com'
+      content: 'estudiokaisentrelew@gmail.com',
+      action: () => window.location.href = 'mailto:estudiokaisentrelew@gmail.com'
     },
     {
       icon: <Clock size={24} />,
       title: 'Horarios',
-      content: 'Lunes a Viernes, 9:00 - 18:00'
+      content: 'Lunes a Viernes, 9:00 - 18:00',
+      action: null
+    },
+    {
+      icon: <MessageCircle size={24} />,
+      title: 'WhatsApp',
+      content: '+54 9 280 436-6867',
+      action: openWhatsApp
     }
   ];
 
@@ -146,13 +169,28 @@ const ContactSection = () => {
             
             <div className="mb-8 space-y-6">
               {contactInfo.map((item, index) => (
-                <div key={index} className="flex items-start gap-4">
-                  <div className="p-3 rounded-lg bg-secondary/10">
+                <div 
+                  key={index} 
+                  className={`flex items-start gap-4 ${item.action ? 'cursor-pointer group' : ''}`}
+                  onClick={item.action ? item.action : undefined}
+                >
+                  <div className={`p-3 rounded-lg flex-shrink-0 ${
+                    item.action 
+                      ? 'bg-secondary/10 text-secondary group-hover:bg-secondary/20 transition-colors' 
+                      : 'bg-secondary/10 text-secondary'
+                  }`}>
                     {item.icon}
                   </div>
-                  <div>
-                    <h4 className="font-bold text-gray-800">{item.title}</h4>
+                  <div className="flex-1">
+                    <h4 className="mb-1 font-bold text-gray-800">{item.title}</h4>
                     <p className="text-gray-600">{item.content}</p>
+                    {item.action && (
+                      <span className="inline-block mt-1 text-sm font-medium transition-opacity opacity-0 text-primary group-hover:opacity-100">
+                        {item.title === 'WhatsApp' ? 'Escribir por WhatsApp' : 
+                         item.title === 'Teléfono' ? 'Llamar ahora' : 
+                         item.title === 'Email' ? 'Enviar email' : ''}
+                      </span>
+                    )}
                   </div>
                 </div>
               ))}
@@ -161,8 +199,12 @@ const ContactSection = () => {
             <div className="p-6 text-white bg-primary rounded-xl">
               <h4 className="mb-3 text-xl font-bold">¿Necesitas ayuda inmediata?</h4>
               <p className="mb-4">Nuestro equipo está listo para atenderte y resolver todas tus dudas.</p>
-              <Button variant="dark" className="bg-white text-primary hover:bg-gray-100">
-                Llamar ahora
+              <Button 
+                className="inline-flex items-center justify-center px-6 py-3 font-semibold text-white transition duration-300 bg-green-600 rounded-lg hover:bg-green-700"
+                onClick={openWhatsApp}
+              >
+                <MessageCircle className="w-5 h-5 mr-2" />
+                Escribir por WhatsApp
               </Button>
             </div>
           </div>

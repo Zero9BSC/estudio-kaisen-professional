@@ -1,8 +1,14 @@
+import { useEffect } from 'react';
 import Button from '../ui/Button';
 import { useNavigate } from 'react-router-dom';
 
 const Hero = () => {
   const navigate = useNavigate();
+
+  // ESTE EFECTO ES EL IMPORTANTE
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const handleContactClick = () => {
   navigate('/contacto');

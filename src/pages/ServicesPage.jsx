@@ -1,4 +1,5 @@
 import React from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
   PieChart, 
@@ -15,6 +16,11 @@ import {
 
 const ServicesPage = () => {
   const navigate = useNavigate();
+
+  // ESTE EFECTO ES EL IMPORTANTE
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const handleContactClick = () => {
     navigate('/contacto');
