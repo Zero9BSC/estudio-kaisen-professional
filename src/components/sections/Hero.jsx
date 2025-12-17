@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 const Hero = () => {
   const navigate = useNavigate();
 
-  // ESTE EFECTO ES EL IMPORTANTE
+  // ESTE EFECTO ES IMPORTANTE!!! Revisar enrutamiento al testear.
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -26,8 +26,8 @@ const Hero = () => {
             Soluciones Contables Integrales en <span className="text-secondary">Trelew</span>
           </h1>
           <p className="max-w-3xl mx-auto mb-10 text-xl text-gray-600">
-            Asesoramiento financiero y legal especializado para empresas y emprendedores. 
-            Optimizamos tus recursos y potenciamos tu crecimiento.
+            Asesoramiento financiero y estratégico para empresas y emprendedores. 
+            Optimizamos tus recursos y potenciamos tu crecimiento de manera sostenible.
           </p>
           <div className="flex flex-col justify-center gap-4 sm:flex-row">
             <Button variant="primary" className="px-8 py-4 text-lg transition duration-300 transform rounded-lg shadow-lg btn-primary hover:-translate-y-1" onClick={handleServicesClick}>

@@ -100,7 +100,7 @@ const LogoSection = ({ onClick, logo }) => (
           color: 'var(--color-schemes-color-scheme-1-text)'
         }}
       >
-        Jurídico • Contable • Impositivo
+        Contable • Impositivo • Jurídico 
       </div>
     </div>
   </div>
@@ -138,7 +138,6 @@ const MobileMenu = ({ isOpen, onToggle, onClose, onContactClick }) => (
           <MobileNavLink to="/" text="Inicio" onClick={onClose} />
           <MobileNavLink to="/servicios" text="Servicios" onClick={onClose} />
           <MobileNavLink to="/nosotros" text="Nosotros" onClick={onClose} />
-          {/* <MobileNavLink to="/contacto" text="Contacto" onClick={onClose} /> */}
           <button 
             onClick={() => {
               onContactClick();

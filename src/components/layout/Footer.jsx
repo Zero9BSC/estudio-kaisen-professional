@@ -6,9 +6,10 @@ const Footer = () => {
           {/* Logo */}
           <div className="col-span-2 md:col-span-1">
             <div className="mb-2 text-2xl font-bold">KAISEN</div>
-            <p className="text-sm text-gray-300">
-              Estudio Jurídico-Contable
-            </p>
+              <p className="text-sm text-gray-300">
+              Estudio Contable - Impositivo - Jurídico
+              </p>
+              <p>Comprometido con la excelencia y la innovación.</p>
           </div>
 
           {/* Contacto */}

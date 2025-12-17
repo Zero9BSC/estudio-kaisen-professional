@@ -52,7 +52,7 @@ const ServicesPage = () => {
       color: "emerald"
     },
     {
-      title: "Asesoramiento Legal-Contable",
+      title: "Asesoramiento Contable",
       description: "Protegemos tu empresa con asesoramiento especializado que garantiza el cumplimiento normativo y fiscal. Minimizamos riesgos legales y optimizamos tu estructura contable.",
       icon: <FileText className="w-12 h-12" />,
       features: [
@@ -71,7 +71,7 @@ const ServicesPage = () => {
         "Programas de liderazgo ejecutivo",
         "Desarrollo de habilidades técnicas",
         "Coaching para equipos de alto rendimiento",
-        "Cultura organizacional y engagement"
+        "Desarrollo de equipos y alto rendimiento"
       ],
       color: "secondary"
     }
@@ -140,9 +140,9 @@ const ServicesPage = () => {
               <button className="px-8 py-3 transition duration-300 transform rounded-lg shadow-lg btn-primary hover:-translate-y-1" onClick={handleContactClick}>
                 Solicitar Consultoría
               </button>
-              <button className="px-8 py-3 text-white transition duration-300 border-white rounded-lg btn-outline hover:bg-white hover:text-primary">
+              {/* <button className="px-8 py-3 text-white transition duration-300 border-white rounded-lg btn-outline hover:bg-white hover:text-primary">
                 Ver Casos de Éxito
-              </button>
+              </button> */}
             </div>
           </div>
         </div>
@@ -175,7 +175,7 @@ const ServicesPage = () => {
                 transition-all duration-300 transform hover:-translate-y-1
                 ${service.color === 'primary' ? 'border-primary' :
                   service.color === 'secondary' ? 'border-secondary' :
-                  service.color === 'emerald' ? 'border-emerald-600' : // CAMBIADO: borde emerald
+                  service.color === 'emerald' ? 'border-emerald-600' :
                   service.color === 'indigo' ? 'border-indigo-600' : 'border-dark'}
               `}
             >
@@ -184,7 +184,7 @@ const ServicesPage = () => {
                   p-3 rounded-lg shadow-sm
                   ${service.color === 'primary' ? 'bg-primary/10 text-primary' :
                     service.color === 'secondary' ? 'bg-secondary/10 text-secondary' :
-                    service.color === 'emerald' ? 'bg-emerald-50 text-emerald-600' : // CAMBIADO: fondo emerald
+                    service.color === 'emerald' ? 'bg-emerald-50 text-emerald-600' :
                     service.color === 'indigo' ? 'bg-indigo-50 text-indigo-600' : 'bg-dark/10 text-dark'}
                 `}>
                   {service.icon}
@@ -201,7 +201,7 @@ const ServicesPage = () => {
                     w-5 h-5
                     ${service.color === 'primary' ? 'text-primary' :
                       service.color === 'secondary' ? 'text-secondary' :
-                      service.color === 'emerald' ? 'text-emerald-600' : // CAMBIADO: check emerald
+                      service.color === 'emerald' ? 'text-emerald-600' :
                       service.color === 'indigo' ? 'text-indigo-600' : 'text-dark'}
                   `} />
                   Áreas de impacto:
@@ -213,7 +213,7 @@ const ServicesPage = () => {
                         w-2 h-2 rounded-full
                         ${service.color === 'primary' ? 'bg-primary' :
                           service.color === 'secondary' ? 'bg-secondary' :
-                          service.color === 'emerald' ? 'bg-emerald-600' : // CAMBIADO: punto emerald
+                          service.color === 'emerald' ? 'bg-emerald-600' :
                           service.color === 'indigo' ? 'bg-indigo-600' : 'bg-dark'}
                       `} />
                       <span className="text-gray-700 font-body">{feature}</span>
@@ -230,11 +230,11 @@ const ServicesPage = () => {
                     service.color === 'secondary' ? 
                     'bg-secondary hover:bg-secondary/90 text-white' :
                     service.color === 'emerald' ? 
-                    'bg-emerald-600 hover:bg-emerald-700 text-white' : // CAMBIADO: botón emerald
+                    'bg-emerald-600 hover:bg-emerald-700 text-white' :
                     service.color === 'indigo' ? 
                     'bg-indigo-600 hover:bg-indigo-700 text-white' :
                     'bg-dark hover:bg-dark/90 text-white'}
-                `}>
+                `} onClick={handleContactClick}>
                   Más información 
                   <ChevronRight className="w-4 h-4" />
                 </button>

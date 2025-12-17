@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import emailjs from '@emailjs/browser';
 import Button from '../ui/Button';
 import Card from '../ui/Card';
-import { Mail, Phone, MapPin, Clock, MessageCircle } from 'lucide-react';
+import { Mail, Phone, MapPin, Clock, MessageCircle, CheckCircle, XCircle, Loader2 } from 'lucide-react';
 
 const ContactSection = () => {
   const [formData, setFormData] = useState({
@@ -12,12 +13,79 @@ const ContactSection = () => {
     message: ''
   });
 
-  const handleSubmit = (e) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [toast, setToast] = useState({
+    show: false,
+    type: '', // 'success' | 'error'
+    message: ''
+  });
+
+  // ============================================================
+  // CONFIGURACIÓN PARA EMAILJS
+  // ============================================================
+  const emailjsConfig = {
+    serviceId: import.meta.env.VITE_EMAILJS_SERVICE_ID,
+    templateId: import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+    publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
+  };
+
+  // Función para mostrar toast con animación
+  const showToast = (type, message) => {
+    setToast({
+      show: true,
+      type,
+      message
+    });
+  };
+
+  // Cerrar toast manualmente
+  const closeToast = () => {
+    setToast(prev => ({ ...prev, show: false }));
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    // Aca va la lógica para enviar el formulario
-    alert('Mensaje enviado correctamente');
-    setFormData({ name: '', email: '', phone: '', service: '', message: '' });
+    
+    // Validación básica
+    if (!formData.name || !formData.email || !formData.message) {
+      showToast('error', 'Por favor completa los campos requeridos');
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const result = await emailjs.send(
+        emailjsConfig.serviceId,
+        emailjsConfig.templateId,
+        {
+          from_name: formData.name,
+          reply_to: formData.email,
+          user_phone: formData.phone,
+          selected_service: formData.service || "No especificado",
+          message: formData.message,
+        },
+        emailjsConfig.publicKey
+      );
+      
+      if (result.status === 200) {
+        showToast('success', '¡Mensaje enviado correctamente! Te contactaremos pronto.');
+        
+        // Resetear formulario tras éxito
+        setFormData({ 
+          name: '', 
+          email: '', 
+          phone: '', 
+          service: '', 
+          message: '' 
+        });
+      }
+    } catch (error) {
+      console.error('Error al enviar mensaje:', error);
+      showToast('error', 'Hubo un error al enviar el mensaje. Intenta nuevamente.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e) => {
@@ -26,6 +94,16 @@ const ContactSection = () => {
       [e.target.name]: e.target.value
     });
   };
+
+  // Efecto para ocultar el toast automáticamente
+  useEffect(() => {
+    if (toast.show) {
+      const timer = setTimeout(() => {
+        setToast(prev => ({ ...prev, show: false }));
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [toast.show]);
 
   // Función para abrir WhatsApp
   const openWhatsApp = () => {
@@ -74,7 +152,36 @@ const ContactSection = () => {
   ];
 
   return (
-    <section className="section-padding bg-gray-50">
+    <section className="relative section-padding bg-gray-50">
+      {/* Toast Notification */}
+      {toast.show && (
+        <div className="fixed z-50 top-4 right-4 animate-fade-in-down">
+          <div className={`flex items-center p-4 mb-3 rounded-lg shadow-lg max-w-md transform transition-all duration-300 ${
+            toast.type === 'success' 
+              ? 'bg-green-50 border border-green-200 text-green-800' 
+              : 'bg-red-50 border border-red-200 text-red-800'
+          }`}>
+            <div className="flex-shrink-0">
+              {toast.type === 'success' ? (
+                <CheckCircle className="w-5 h-5 text-green-500" />
+              ) : (
+                <XCircle className="w-5 h-5 text-red-500" />
+              )}
+            </div>
+            <div className="ml-3">
+              <p className="text-sm font-medium">{toast.message}</p>
+            </div>
+            <button
+              onClick={closeToast}
+              className="ml-auto -mx-1.5 -my-1.5 rounded-lg p-1.5 inline-flex h-8 w-8 hover:bg-gray-100 transition-colors"
+            >
+              <span className="sr-only">Cerrar</span>
+              <XCircle className="w-5 h-5" />
+            </button>
+          </div>
+        </div>
+      )}
+
       <div className="container px-4 mx-auto">
         <div className="mb-12 text-center">
           <h2 className="mb-4 text-3xl font-bold md:text-4xl text-primary">
@@ -87,31 +194,44 @@ const ContactSection = () => {
 
         <div className="grid gap-12 lg:grid-cols-2">
           {/* Formulario */}
-          <Card className="p-8">
+          <Card className="relative p-8">
+            {isSubmitting && (
+              <div className="absolute inset-0 z-10 flex items-center justify-center rounded-lg bg-white/80">
+                <div className="flex flex-col items-center">
+                  <Loader2 className="w-8 h-8 mb-2 text-secondary animate-spin" />
+                  <p className="text-gray-600">Enviando mensaje...</p>
+                </div>
+              </div>
+            )}
+            
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
-                <label className="block mb-2 text-gray-700">Nombre completo *</label>
+                <label className="block mb-2 text-gray-700">
+                  Nombre completo <span className="text-red-500">*</span>
+                </label>
                 <input
                   type="text"
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-secondary focus:border-transparent"
+                  className="w-full px-4 py-3 transition-all duration-200 border border-gray-300 rounded-lg focus:ring-2 focus:ring-secondary focus:border-transparent"
                   placeholder="Tu nombre"
                 />
               </div>
 
               <div className="grid gap-6 md:grid-cols-2">
                 <div>
-                  <label className="block mb-2 text-gray-700">Email *</label>
+                  <label className="block mb-2 text-gray-700">
+                    Email <span className="text-red-500">*</span>
+                  </label>
                   <input
                     type="email"
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-secondary focus:border-transparent"
+                    className="w-full px-4 py-3 transition-all duration-200 border border-gray-300 rounded-lg focus:ring-2 focus:ring-secondary focus:border-transparent"
                     placeholder="tu@email.com"
                   />
                 </div>
@@ -122,7 +242,7 @@ const ContactSection = () => {
                     name="phone"
                     value={formData.phone}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-secondary focus:border-transparent"
+                    className="w-full px-4 py-3 transition-all duration-200 border border-gray-300 rounded-lg focus:ring-2 focus:ring-secondary focus:border-transparent"
                     placeholder="+54 123 456 789"
                   />
                 </div>
@@ -134,31 +254,48 @@ const ContactSection = () => {
                   name="service"
                   value={formData.service}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-secondary focus:border-transparent"
+                  className="w-full px-4 py-3 transition-all duration-200 border border-gray-300 rounded-lg focus:ring-2 focus:ring-secondary focus:border-transparent"
                 >
                   <option value="">Seleccionar servicio</option>
-                  <option value="consultoria">Consultoría Financiera</option>
-                  <option value="planificacion">Planificación Estratégica</option>
-                  <option value="legal">Asesoramiento Legal-Contable</option>
-                  <option value="capacitacion">Capacitación & Desarrollo</option>
+                  <option value="Consultoría Financiera">Consultoría Financiera</option>
+                  <option value="Planificación Estratégica">Planificación Estratégica</option>
+                  <option value="Asesoramiento Legal-Contable">Asesoramiento Legal-Contable</option>
+                  <option value="Capacitación & Desarrollo">Capacitación & Desarrollo</option>
                 </select>
               </div>
 
               <div>
-                <label className="block mb-2 text-gray-700">Mensaje *</label>
+                <label className="block mb-2 text-gray-700">
+                  Mensaje <span className="text-red-500">*</span>
+                </label>
                 <textarea
                   name="message"
                   value={formData.message}
                   onChange={handleChange}
                   required
                   rows="4"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-secondary focus:border-transparent"
+                  className="w-full px-4 py-3 transition-all duration-200 border border-gray-300 rounded-lg focus:ring-2 focus:ring-secondary focus:border-transparent"
                   placeholder="Cuéntanos sobre tus necesidades..."
                 ></textarea>
               </div>
 
-              <Button type="submit" variant="primary" className="w-full">
-                Enviar Mensaje
+              <Button 
+                type="submit" 
+                variant="primary" 
+                className="relative w-full py-3 overflow-hidden text-lg group"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? (
+                  <span className="flex items-center justify-center">
+                    <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                    Enviando...
+                  </span>
+                ) : (
+                  <>
+                    <span className="relative z-10">Enviar Mensaje</span>
+                    <div className="absolute inset-0 transition-transform duration-300 transform -translate-x-full bg-secondary group-hover:translate-x-0"></div>
+                  </>
+                )}
               </Button>
             </form>
           </Card>
@@ -176,7 +313,7 @@ const ContactSection = () => {
                 >
                   <div className={`p-3 rounded-lg flex-shrink-0 ${
                     item.action 
-                      ? 'bg-secondary/10 text-secondary group-hover:bg-secondary/20 transition-colors' 
+                      ? 'bg-secondary/10 text-secondary group-hover:bg-secondary/20 transition-all duration-200 group-hover:scale-105' 
                       : 'bg-secondary/10 text-secondary'
                   }`}>
                     {item.icon}
@@ -185,11 +322,13 @@ const ContactSection = () => {
                     <h4 className="mb-1 font-bold text-gray-800">{item.title}</h4>
                     <p className="text-gray-600">{item.content}</p>
                     {item.action && (
-                      <span className="inline-block mt-1 text-sm font-medium transition-opacity opacity-0 text-primary group-hover:opacity-100">
-                        {item.title === 'WhatsApp' ? 'Escribir por WhatsApp' : 
-                         item.title === 'Teléfono' ? 'Llamar ahora' : 
-                         item.title === 'Email' ? 'Enviar email' : ''}
-                      </span>
+                      <div className="h-0 overflow-visible">
+                        <span className="inline-block mt-1 text-sm font-medium transition-all duration-200 opacity-0 text-primary group-hover:opacity-100 group-hover:translate-x-1">
+                          {item.title === 'WhatsApp' ? 'Escribir por WhatsApp →' : 
+                          item.title === 'Teléfono' ? 'Llamar ahora →' : 
+                          item.title === 'Email' ? 'Enviar email →' : ''}
+                        </span>
+                      </div>
                     )}
                   </div>
                 </div>
@@ -210,6 +349,22 @@ const ContactSection = () => {
           </div>
         </div>
       </div>
+
+      <style jsx>{`
+        @keyframes fade-in-down {
+          from {
+            opacity: 0;
+            transform: translateY(-20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        .animate-fade-in-down {
+          animation: fade-in-down 0.3s ease-out;
+        }
+      `}</style>
     </section>
   );
 };

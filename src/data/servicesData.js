@@ -21,7 +21,7 @@ export const services = [
       "Proyección de presupuestos",
       "Análisis de rentabilidad"
     ],
-    iconName: "DollarSign", // Nombre del ícono, no el componente
+    iconName: "DollarSign",
     category: "Finanzas",
     color: "blue"
   },
@@ -41,16 +41,16 @@ export const services = [
   },
   {
     id: 3,
-    title: "Asesoramiento Legal-Contable",
-    description: "Cumplimiento normativo y asesoramiento legal especializado.",
+    title: "Asesoramiento Contable y Cumplimiento Legal",
+    description: "Garantizamos la correcta gestión contable y el cumplimiento normativo de tu empresa, protegiéndola de riesgos fiscales y legales.",
     features: [
-      "Conformidad legal y fiscal",
-      "Auditorías contables",
-      "Asesoramiento societario",
-      "Trámites regulatorios"
+      "Contabilidad y gestión impositiva",
+      "Cumplimiento normativo y fiscal (ARCA, DDJJ, IGJ, etc.)",
+      "Auditorías y revisiones contables internas",
+      "Asesoramiento en estructura societaria"
     ],
-    iconName: "Scale",
-    category: "Legal",
+    iconName: "FileText",
+    category: "Contable-Legal",
     color: "green"
   },
   {
