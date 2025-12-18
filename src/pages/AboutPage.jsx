@@ -184,7 +184,7 @@ const AboutPage = () => {
               ¿Listo para trabajar juntos?
             </h2>
             <p className="mb-8 text-lg text-gray-600 font-body">
-              Agenda una consultoría gratuita y descubre cómo nuestro equipo puede impulsar el crecimiento de tu empresa.
+              Agenda una consultoría inicial con nuestro equipo y descubre cómo podemos impulsar la eficiencia y el crecimiento de tu empresa.
             </p>
             <div className="flex flex-col justify-center gap-4 sm:flex-row">
               <button className="px-8 py-3 transition duration-300 rounded-lg shadow-md btn-primary" onClick={handleContactClick}>
