@@ -3,8 +3,10 @@ import { companyInfo, values } from '../data/servicesData';
 import { Target, Eye, Users, Award, CheckCircle, ArrowRight } from 'lucide-react';
 import Card from '../components/ui/Card';
 import { useNavigate } from 'react-router-dom';
+import { useMetaTags } from '../hooks/useMetaTags';
 
 const AboutPage = () => {
+  useMetaTags();
   const navigate = useNavigate();
 
   // ESTE EFECTO ES EL IMPORTANTE
@@ -129,6 +131,7 @@ const AboutPage = () => {
         </div>
 
         {/* Equipo - Rediseñado */}
+        {/*
         <div className="mb-20">
           <div className="mb-12 text-center">
             <div className="inline-block px-4 py-2 mb-4 font-semibold rounded-full bg-primary/10 text-primary font-body">
@@ -176,6 +179,7 @@ const AboutPage = () => {
             ))}
           </div>
         </div>
+        */}
 
         {/* CTA */}
         <div className="p-12 text-center border border-gray-200 bg-gradient-to-r from-gray-50 to-light rounded-2xl">

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useMetaTags } from '../hooks/useMetaTags';
 import { 
   PieChart, 
   Navigation, 
@@ -15,6 +16,7 @@ import {
 } from 'lucide-react';
 
 const ServicesPage = () => {
+  useMetaTags();
   const navigate = useNavigate();
 
   // ESTE EFECTO ES EL IMPORTANTE
