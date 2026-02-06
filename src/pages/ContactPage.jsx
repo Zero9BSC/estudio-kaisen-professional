@@ -1,7 +1,10 @@
+import { useMetaTags } from '../hooks/useMetaTags';
 import ContactSection from '../components/sections/ContactSection';
 import { MapPin } from 'lucide-react';
 
 const ContactPage = () => {
+  useMetaTags();
+
   return (
     <>
       {/* Hero - Mismo estilo que Services y About */}

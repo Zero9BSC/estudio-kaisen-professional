@@ -23,7 +23,7 @@ const Header = () => {
       style={{ fontFamily: 'var(--text-regular-normal-font-family)' }}
     >
       {/* Sección izquierda - Navegación (Desktop) */}
-      <div className="items-center flex-1 hidden gap-8 md:flex">
+      <div className="items-center flex-1 hidden gap-8 lg:flex">
         <NavLink to="/" text="Inicio" />
         <NavLink to="/servicios" text="Servicios" />
         <NavLink to="/nosotros" text="Nosotros" />
@@ -34,7 +34,7 @@ const Header = () => {
       <LogoSection onClick={handleLogoClick} logo={logo} />
 
       {/* Botón Contactar - Derecha */}
-      <div className="items-center justify-end flex-1 hidden md:flex">
+      <div className="items-center justify-end flex-1 hidden lg:flex">
         <ContactButton onClick={handleContactClick} />
       </div>
 
@@ -125,7 +125,7 @@ const ContactButton = ({ onClick }) => (
 const MobileMenu = ({ isOpen, onToggle, onClose, onContactClick }) => (
   <>
     <button 
-      className="md:hidden text-[color:var(--color-schemes-color-scheme-1-text)]"
+      className="lg:hidden text-[color:var(--color-schemes-color-scheme-1-text)]"
       onClick={onToggle}
       aria-label="Menú"
     >
@@ -133,7 +133,7 @@ const MobileMenu = ({ isOpen, onToggle, onClose, onContactClick }) => (
     </button>
 
     {isOpen && (
-      <div className="md:hidden absolute top-[72px] left-0 right-0 bg-[color:var(--color-schemes-color-scheme-1-background)] p-6 border-t border-[color:var(--color-schemes-color-scheme-1-border)] z-40">
+      <div className="lg:hidden absolute top-[72px] left-0 right-0 bg-[color:var(--color-schemes-color-scheme-1-background)] p-6 border-t border-[color:var(--color-schemes-color-scheme-1-border)] z-40">
         <div className="flex flex-col space-y-4">
           <MobileNavLink to="/" text="Inicio" onClick={onClose} />
           <MobileNavLink to="/servicios" text="Servicios" onClick={onClose} />

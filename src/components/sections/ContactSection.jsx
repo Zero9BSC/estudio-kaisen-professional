@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import emailjs from '@emailjs/browser';
+import { trackFormSubmit, trackPhoneClick } from '../../utils/analytics';
 import Button from '../ui/Button';
 import Card from '../ui/Card';
 import { Mail, Phone, MapPin, Clock, MessageCircle, CheckCircle, XCircle, Loader2 } from 'lucide-react';
@@ -69,6 +70,7 @@ const ContactSection = () => {
       );
       
       if (result.status === 200) {
+        trackFormSubmit('contact_form');
         showToast('success', '¡Mensaje enviado correctamente! Te contactaremos pronto.');
         
         // Resetear formulario tras éxito
@@ -115,6 +117,7 @@ const ContactSection = () => {
 
   // Función para llamar
   const makeCall = () => {
+    trackPhoneClick('+542804421137');
     window.location.href = 'tel:+542804421137';
   };
 
