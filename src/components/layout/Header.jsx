@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, startTransition } from 'react';
 import { Menu, X } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import logo from '../../assets/logo3.png';
+import logoWebp from '../../assets/logo3.webp';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -18,20 +19,21 @@ const Header = () => {
   };
 
   return (
-    <nav 
-      className="h-[72px] flex items-center justify-between px-4 md:px-[var(--spacing-sizing-page-padding-padding-global)] bg-[color:var(--color-schemes-color-scheme-1-background)]"
-      style={{ fontFamily: 'var(--text-regular-normal-font-family)' }}
-    >
-      {/* Sección izquierda - Navegación (Desktop) */}
-      <div className="items-center flex-1 hidden gap-8 lg:flex">
-        <NavLink to="/" text="Inicio" />
-        <NavLink to="/servicios" text="Servicios" />
-        <NavLink to="/nosotros" text="Nosotros" />
-        {/* <NavLink to="/contacto" text="Contacto" /> */}
-      </div>
+    <header className="bg-[color:var(--color-schemes-color-scheme-1-background)]">
+      <nav
+        className="h-[72px] flex items-center justify-between px-4 md:px-[var(--spacing-sizing-page-padding-padding-global)]"
+        style={{ fontFamily: 'var(--text-regular-normal-font-family)' }}
+        aria-label="Principal"
+      >
+        {/* Sección izquierda - Navegación (Desktop) */}
+        <div className="items-center flex-1 hidden gap-8 lg:flex">
+          <NavLink to="/" text="Inicio" />
+          <NavLink to="/servicios" text="Servicios" />
+          <NavLink to="/nosotros" text="Nosotros" />
+        </div>
 
-      {/* Logo - Centro (clickeable) */}
-      <LogoSection onClick={handleLogoClick} logo={logo} />
+        {/* Logo - Centro (enlace a inicio) */}
+        <LogoSection logo={logo} logoWebp={logoWebp} />
 
       {/* Botón Contactar - Derecha */}
       <div className="items-center justify-end flex-1 hidden lg:flex">
@@ -41,11 +43,12 @@ const Header = () => {
       {/* Menú móvil */}
       <MobileMenu 
         isOpen={isMenuOpen}
-        onToggle={() => setIsMenuOpen(!isMenuOpen)}
-        onClose={() => setIsMenuOpen(false)}
+        onToggle={() => startTransition(() => setIsMenuOpen((prev) => !prev))}
+        onClose={() => startTransition(() => setIsMenuOpen(false))}
         onContactClick={handleContactClick}
       />
-    </nav>
+      </nav>
+    </header>
   );
 };
 
@@ -65,22 +68,30 @@ const NavLink = ({ to, text }) => (
   </Link>
 );
 
-// Componente Logo
-const LogoSection = ({ onClick, logo }) => (
-  <div 
+// Componente Logo (enlace a inicio – accesible y SEO)
+const LogoSection = ({ logo, logoWebp }) => (
+  <Link
+    to="/"
     className="flex items-center gap-4 cursor-pointer group"
-    onClick={onClick}
+    aria-label="Estudio Kaisen - Ir a inicio"
   >
     <div className="flex items-center justify-center p-1 overflow-hidden h-14 w-14 bg-white/5">
-      <img 
-        src={logo} 
-        alt="Estudio Jurídico Contable Impositivo Kaisen" 
-        className="object-contain min-w-full min-h-full transition-transform duration-300 group-hover:scale-105"
-        style={{ 
-          transform: 'scale(1.4)',
-          transformOrigin: 'center'
-        }}
-      />
+      <picture>
+        <source srcSet={logoWebp} type="image/webp" />
+        <img
+          src={logo}
+          alt="Estudio Jurídico Contable Impositivo Kaisen"
+          width={56}
+          height={56}
+          loading="eager"
+          decoding="async"
+          className="object-contain min-w-full min-h-full transition-transform duration-300 group-hover:scale-105"
+          style={{
+            transform: 'scale(1.4)',
+            transformOrigin: 'center'
+          }}
+        />
+      </picture>
     </div>
     
     <div className="flex flex-col">
@@ -103,7 +114,7 @@ const LogoSection = ({ onClick, logo }) => (
         Contable • Impositivo • Jurídico 
       </div>
     </div>
-  </div>
+  </Link>
 );
 
 // Componente Botón Contactar

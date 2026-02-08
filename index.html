@@ -1,41 +1,55 @@
 <!doctype html>
-<html lang="es">
+<html lang="es" data-gtm-id="GTM-XXXXXX">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Base SEO Meta Tags (will be updated by useMetaTags hook) -->
-    <meta name="description" content="Estudio profesional de contadores y abogados en Trelew, Chubut" />
-    <meta name="keywords" content="contador trelew, abogado trelew, estudio contable chubut" />
+    <!-- Google Tag Manager – deferred until after first paint (LCP/INP) -->
+    <script>
+      (function(){
+        function loadGTM(){
+          var w=window,d=document,s='script',l='dataLayer',i=d.documentElement.getAttribute('data-gtm-id');
+          if(!i)return;
+          w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});
+          var f=d.getElementsByTagName(s)[0],j=d.createElement(s);
+          j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i;f.parentNode.insertBefore(j,f);
+        }
+        if('requestIdleCallback' in window) requestIdleCallback(loadGTM, { timeout: 2000 });
+        else setTimeout(loadGTM, 0);
+      })();
+    </script>
+    <!-- End Google Tag Manager -->
+
+    <!-- Preload primary fonts only (Core Web Vitals: LCP / CLS) -->
+    <link rel="preload" href="/assets/fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/assets/fonts/inter-latin-ext-400-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/assets/fonts/fraunces-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/assets/fonts/fraunces-latin-ext-700-normal.woff2" as="font" type="font/woff2" crossorigin />
+
+    <!-- Base SEO Meta Tags (will be updated by useMetaTags hook). Title <60, desc 140–155, CTR-optimized. -->
+    <meta name="description" content="Asesoramiento contable y legal confiable en Trelew. +15 años de experiencia en Chubut, Patagonia. Primera consulta sin costo. Contadores y abogados expertos." />
+    <meta name="keywords" content="contador trelew, abogado trelew, estudio contable chubut, estudio jurídico trelew, asesoramiento impositivo trelew, auditoría contable chubut, liquidación sueldos trelew, asesoramiento legal empresarial chubut" />
     <link rel="canonical" href="https://consultorakaisen.com.ar/" />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="es_AR" />
     <meta property="og:site_name" content="Estudio Kaisen" />
-    <meta property="og:title" content="Estudio Kaisen" />
-    <meta property="og:description" content="Estudio profesional de contadores y abogados en Trelew" />
+    <meta property="og:title" content="Contador en Trelew | Estudio Kaisen – Patagonia" />
+    <meta property="og:description" content="Asesoramiento contable y legal confiable en Trelew. +15 años de experiencia en Chubut, Patagonia. Primera consulta sin costo. Contadores y abogados expertos." />
     <meta property="og:url" content="https://consultorakaisen.com.ar/" />
     <meta property="og:image" content="https://consultorakaisen.com.ar/og-image.jpg" />
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Estudio Kaisen" />
-    <meta name="twitter:description" content="Estudio profesional de contadores y abogados" />
+    <meta name="twitter:title" content="Contador en Trelew | Estudio Kaisen – Patagonia" />
+    <meta name="twitter:description" content="Asesoramiento contable y legal confiable en Trelew. +15 años de experiencia en Chubut, Patagonia. Primera consulta sin costo. Contadores y abogados expertos." />
 
     <!-- Geo Tags -->
     <meta name="geo.region" content="AR-U" />
     <meta name="geo.placename" content="Trelew, Chubut" />
     <meta name="geo.position" content="-43.2519;-65.3054" />
 
-    <!-- Google Tag Manager (add after viewport) -->
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-XXXXXX');</script>
-    <!-- End Google Tag Manager -->
-    
     <!-- Favicon Configuration -->
     <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -44,13 +58,17 @@
     <meta name="apple-mobile-web-app-title" content="Kaisen" />
     <link rel="manifest" href="/site.webmanifest" />
     <!-- End Favicon Configuration -->
-    
-    <title>Estudio Kaisen - Consultoría Profesional</title>
+
+    <!-- Schema.org JSON-LD: LocalBusiness (ProfessionalService) + Place – Argentina / Patagonia local SEO -->
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@graph":[{"@type":"ProfessionalService","@id":"https://consultorakaisen.com.ar/#organization","name":"Estudio Kaisen","alternateName":"Estudio Jurídico-Contable Kaisen","description":"Estudio profesional multidisciplinario de contadores, abogados y asesores especializados en servicios contables, impositivos, legales y capacitación empresarial en Trelew, Chubut, Patagonia Argentina.","url":"https://consultorakaisen.com.ar","logo":"https://consultorakaisen.com.ar/assets/logo3.png","image":["https://consultorakaisen.com.ar/assets/logo3.png","https://consultorakaisen.com.ar/og-image.jpg"],"telephone":"+54-280-442-1137","email":"estudiokaisentrelew@gmail.com","address":{"@type":"PostalAddress","streetAddress":"9 de Julio 128, 1° piso A (Edificio Iberia)","addressLocality":"Trelew","addressRegion":"Chubut","postalCode":"U9100","addressCountry":"AR"},"geo":{"@type":"GeoCoordinates","latitude":-43.2519305,"longitude":-65.305382},"hasMap":"https://www.google.com/maps/search/?api=1&query=9+de+Julio+128+Trelew+Chubut+Argentina","containedInPlace":{"@id":"https://consultorakaisen.com.ar/#trelew"},"areaServed":[{"@type":"Country","name":"Argentina"},{"@type":"AdministrativeArea","name":"Patagonia","containedInPlace":{"@type":"Country","name":"Argentina"}},{"@type":"AdministrativeArea","name":"Chubut","containedInPlace":{"@type":"Country","name":"Argentina"}},{"@type":"City","name":"Trelew","containedInPlace":{"@type":"AdministrativeArea","name":"Chubut","addressCountry":"AR"}},"Trelew","Comodoro Rivadavia","Puerto Madryn","Rawson","Esquel","Gaiman","Dolavon","Patagonia Argentina"],"serviceArea":[{"@type":"Country","name":"Argentina"},{"@type":"AdministrativeArea","name":"Chubut","containedInPlace":{"@type":"Country","name":"Argentina"}},{"@type":"AdministrativeArea","name":"Patagonia Argentina","containedInPlace":{"@type":"Country","name":"Argentina"}},{"@type":"City","name":"Trelew","containedInPlace":{"@type":"AdministrativeArea","name":"Chubut","addressCountry":"AR"}}],"priceRange":"$$","openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday"],"opens":"09:00","closes":"18:00"}],"sameAs":["https://www.google.com/maps/search/?api=1&query=9+de+Julio+128+Trelew+Chubut+Argentina","https://www.facebook.com/estudiokaisentrelew","https://www.instagram.com/estudiokaisentrelew","https://www.linkedin.com/company/estudio-kaisen"]},{"@type":"Place","@id":"https://consultorakaisen.com.ar/#trelew","name":"Trelew, Chubut, Patagonia Argentina","address":{"@type":"PostalAddress","addressLocality":"Trelew","addressRegion":"Chubut","addressCountry":"AR"},"geo":{"@type":"GeoCoordinates","latitude":-43.2519305,"longitude":-65.305382},"containedInPlace":{"@type":"AdministrativeArea","name":"Chubut","addressCountry":"AR"}}]}
+    </script>
+
+    <title>Contador en Trelew | Estudio Kaisen – Patagonia</title>
   </head>
   <body>
-    <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-XXXXXX"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- Google Tag Manager (noscript): replace id= with your container ID (must match data-gtm-id on <html>) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-XXXXXX" height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Manager"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
     
     <div id="root"></div>

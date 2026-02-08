@@ -1,13 +1,23 @@
-/* Self-hosted fonts (better performance) */
-@import '@fontsource/fraunces/400.css';
-@import '@fontsource/fraunces/500.css';
-@import '@fontsource/fraunces/600.css';
-@import '@fontsource/fraunces/700.css';
-@import '@fontsource/inter/300.css';
-@import '@fontsource/inter/400.css';
-@import '@fontsource/inter/500.css';
-@import '@fontsource/inter/600.css';
-@import '@fontsource/inter/700.css';
+/* Self-hosted fonts: latin + latin-ext only (Spanish site – smaller bundle).
+   @fontsource uses font-display: swap in each @font-face for Core Web Vitals. */
+@import '@fontsource/fraunces/latin-400.css';
+@import '@fontsource/fraunces/latin-ext-400.css';
+@import '@fontsource/fraunces/latin-500.css';
+@import '@fontsource/fraunces/latin-ext-500.css';
+@import '@fontsource/fraunces/latin-600.css';
+@import '@fontsource/fraunces/latin-ext-600.css';
+@import '@fontsource/fraunces/latin-700.css';
+@import '@fontsource/fraunces/latin-ext-700.css';
+@import '@fontsource/inter/latin-300.css';
+@import '@fontsource/inter/latin-ext-300.css';
+@import '@fontsource/inter/latin-400.css';
+@import '@fontsource/inter/latin-ext-400.css';
+@import '@fontsource/inter/latin-500.css';
+@import '@fontsource/inter/latin-ext-500.css';
+@import '@fontsource/inter/latin-600.css';
+@import '@fontsource/inter/latin-ext-600.css';
+@import '@fontsource/inter/latin-700.css';
+@import '@fontsource/inter/latin-ext-700.css';
 
 /* Tailwind base */
 @tailwind base;
@@ -132,6 +142,21 @@
   .section-padding {
     @apply py-12 md:py-20;
   }
+}
+
+/* Toast animation (CLS: avoid styled-jsx; single paint) */
+@keyframes fade-in-down {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-fade-in-down {
+  animation: fade-in-down 0.3s ease-out;
 }
 
 /* Base styles */

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import emailjs from '@emailjs/browser';
-import { trackFormSubmit, trackPhoneClick } from '../../utils/analytics';
+import { trackContactConversion, trackPhoneClick } from '../../utils/analytics';
 import Button from '../ui/Button';
 import Card from '../ui/Card';
 import { Mail, Phone, MapPin, Clock, MessageCircle, CheckCircle, XCircle, Loader2 } from 'lucide-react';
@@ -70,7 +70,7 @@ const ContactSection = () => {
       );
       
       if (result.status === 200) {
-        trackFormSubmit('contact_form');
+        trackContactConversion({ conversion_name: 'contact_form' });
         showToast('success', '¡Mensaje enviado correctamente! Te contactaremos pronto.');
         
         // Resetear formulario tras éxito
@@ -308,34 +308,38 @@ const ContactSection = () => {
             <h3 className="mb-6 text-2xl font-bold text-primary">Información de contacto</h3>
             
             <div className="mb-8 space-y-6">
-              {contactInfo.map((item, index) => (
-                <div 
-                  key={index} 
-                  className={`flex items-start gap-4 ${item.action ? 'cursor-pointer group' : ''}`}
-                  onClick={item.action ? item.action : undefined}
-                >
-                  <div className={`p-3 rounded-lg flex-shrink-0 ${
-                    item.action 
-                      ? 'bg-secondary/10 text-secondary group-hover:bg-secondary/20 transition-all duration-200 group-hover:scale-105' 
-                      : 'bg-secondary/10 text-secondary'
-                  }`}>
-                    {item.icon}
-                  </div>
-                  <div className="flex-1">
-                    <h4 className="mb-1 font-bold text-gray-800">{item.title}</h4>
-                    <p className="text-gray-600">{item.content}</p>
-                    {item.action && (
-                      <div className="h-0 overflow-visible">
+              {contactInfo.map((item, index) => {
+                const Wrapper = item.action ? 'button' : 'div';
+                const wrapperProps = item.action
+                  ? {
+                      type: 'button',
+                      onClick: item.action,
+                      className: 'flex items-start gap-4 w-full text-left cursor-pointer group border-0 bg-transparent p-0'
+                    }
+                  : { className: 'flex items-start gap-4' };
+                return (
+                  <Wrapper key={index} {...wrapperProps}>
+                    <div className={`p-3 rounded-lg flex-shrink-0 ${
+                      item.action
+                        ? 'bg-secondary/10 text-secondary group-hover:bg-secondary/20 transition-all duration-200 group-hover:scale-105'
+                        : 'bg-secondary/10 text-secondary'
+                    }`}>
+                      {item.icon}
+                    </div>
+                    <div className="flex-1">
+                      <h4 className="mb-1 font-bold text-gray-800">{item.title}</h4>
+                      <p className="text-gray-600">{item.content}</p>
+                      {item.action && (
                         <span className="inline-block mt-1 text-sm font-medium transition-all duration-200 opacity-0 text-primary group-hover:opacity-100 group-hover:translate-x-1">
-                          {item.title === 'WhatsApp' ? 'Escribir por WhatsApp →' : 
-                          item.title === 'Teléfono' ? 'Llamar ahora →' : 
+                          {item.title === 'WhatsApp' ? 'Escribir por WhatsApp →' :
+                          item.title === 'Teléfono' ? 'Llamar ahora →' :
                           item.title === 'Email' ? 'Enviar email →' : ''}
                         </span>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              ))}
+                      )}
+                    </div>
+                  </Wrapper>
+                );
+              })}
             </div>
 
             <div className="p-6 text-white bg-primary rounded-xl">
@@ -353,21 +357,6 @@ const ContactSection = () => {
         </div>
       </div>
 
-      <style jsx>{`
-        @keyframes fade-in-down {
-          from {
-            opacity: 0;
-            transform: translateY(-20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        .animate-fade-in-down {
-          animation: fade-in-down 0.3s ease-out;
-        }
-      `}</style>
     </section>
   );
 };

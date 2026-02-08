@@ -4,6 +4,7 @@ import { Target, Eye, Users, Award, CheckCircle, ArrowRight } from 'lucide-react
 import Card from '../components/ui/Card';
 import { useNavigate } from 'react-router-dom';
 import { useMetaTags } from '../hooks/useMetaTags';
+import { EnhancedSchema } from '../components/EnhancedSchema';
 
 const AboutPage = () => {
   useMetaTags();
@@ -23,7 +24,9 @@ const AboutPage = () => {
   };
   
   return (
-    <div className="min-h-screen bg-white">
+    <>
+      <EnhancedSchema />
+      <div className="min-h-screen bg-white">
       {/* Hero Section */}
       <div className="relative px-4 py-20 overflow-hidden text-white bg-gradient-to-r from-primary to-dark">
         <div className="absolute inset-0 bg-black/10"></div>
@@ -202,6 +205,7 @@ const AboutPage = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

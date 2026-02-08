@@ -1,51 +1,201 @@
-# Enable UTF-8 encoding
+# ============================================
+# Apache Configuration for Estudio Kaisen
+# Static React SEO – consultorakaisen.com.ar
+# ============================================
+
+# ----------------------------------------------------------------------
+# ENCODING
+# ----------------------------------------------------------------------
 AddDefaultCharset UTF-8
 
-# Force HTTPS and non-www
-RewriteEngine On
-RewriteCond %{HTTPS} off
-RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
-RewriteCond %{HTTP_HOST} ^www\.consultorakaisen\.com\.ar$ [NC]
-RewriteRule ^(.*)$ https://consultorakaisen.com.ar/$1 [R=301,L]
-
-# SPA Routing (redirect all requests to index.html except actual files)
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_FILENAME} !-l
-RewriteRule ^ index.html [QSA,L]
-
-# Compression
-<IfModule mod_deflate.c>
-  AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json
-</IfModule>
-
-# Cache headers
-<IfModule mod_expires.c>
-  ExpiresActive On
-  # HTML - no cache
-  ExpiresByType text/html "access plus 0 seconds"
-  # CSS, JS (hashed files) - 1 year
-  ExpiresByType text/css "access plus 1 year"
-  ExpiresByType application/javascript "access plus 1 year"
-  # Images - 1 year
-  ExpiresByType image/jpeg "access plus 1 year"
-  ExpiresByType image/png "access plus 1 year"
-  ExpiresByType image/webp "access plus 1 year"
-  ExpiresByType image/svg+xml "access plus 1 year"
-  # Fonts - 1 year
-  ExpiresByType font/woff2 "access plus 1 year"
-  ExpiresByType font/woff "access plus 1 year"
-  ExpiresByType font/ttf "access plus 1 year"
-</IfModule>
-
-# Security headers
+# ----------------------------------------------------------------------
+# SECURITY HEADERS (SEO-safe)
+# ----------------------------------------------------------------------
 <IfModule mod_headers.c>
   Header set X-Content-Type-Options "nosniff"
   Header set X-Frame-Options "SAMEORIGIN"
   Header set X-XSS-Protection "1; mode=block"
   Header set Referrer-Policy "strict-origin-when-cross-origin"
+  Header set Permissions-Policy "camera=(), microphone=(), geolocation=(), interest-cohort=()"
+  Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" env=HTTPS
 </IfModule>
 
-# Disable server signature
-ServerSignature Off
+# ----------------------------------------------------------------------
+# REDIRECTS: HTTPS & NON-WWW
+# ----------------------------------------------------------------------
+RewriteEngine On
+RewriteBase /
+
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^www\.consultorakaisen\.com\.ar$ [NC]
+RewriteRule ^(.*)$ https://consultorakaisen.com.ar/$1 [R=301,L]
+
+# ----------------------------------------------------------------------
+# SSG / SPA ROUTING
+# ----------------------------------------------------------------------
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule ^ - [L]
+
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)/$ /$1 [R=301,L]
+
+RewriteRule ^$ /index.html [L]
+
+RewriteCond %{REQUEST_URI} ^/servicios/?$
+RewriteCond %{DOCUMENT_ROOT}/servicios/index.html -f
+RewriteRule ^ /servicios/index.html [L]
+
+RewriteCond %{REQUEST_URI} ^/nosotros/?$
+RewriteCond %{DOCUMENT_ROOT}/nosotros/index.html -f
+RewriteRule ^ /nosotros/index.html [L]
+
+RewriteCond %{REQUEST_URI} ^/contacto/?$
+RewriteCond %{DOCUMENT_ROOT}/contacto/index.html -f
+RewriteRule ^ /contacto/index.html [L]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ /index.html [QSA,L]
+
+# ----------------------------------------------------------------------
+# COMPRESSION: Gzip
+# ----------------------------------------------------------------------
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html
+  AddOutputFilterByType DEFLATE text/css
+  AddOutputFilterByType DEFLATE text/javascript
+  AddOutputFilterByType DEFLATE application/javascript
+  AddOutputFilterByType DEFLATE application/x-javascript
+  AddOutputFilterByType DEFLATE application/json
+  AddOutputFilterByType DEFLATE application/xml
+  AddOutputFilterByType DEFLATE text/xml
+  AddOutputFilterByType DEFLATE image/svg+xml
+  AddOutputFilterByType DEFLATE image/x-icon
+  AddOutputFilterByType DEFLATE font/woff
+  AddOutputFilterByType DEFLATE font/woff2
+  AddOutputFilterByType DEFLATE application/vnd.ms-fontobject
+  AddOutputFilterByType DEFLATE application/x-font-ttf
+  AddOutputFilterByType DEFLATE application/x-font-otf
+  AddOutputFilterByType DEFLATE application/x-font-woff
+  AddOutputFilterByType DEFLATE application/x-font-woff2
+  Header append Vary Accept-Encoding
+</IfModule>
+
+# ----------------------------------------------------------------------
+# COMPRESSION: Brotli (if available)
+# ----------------------------------------------------------------------
+<IfModule mod_brotli.c>
+  AddOutputFilterByType BROTLI_COMPRESS text/html text/css text/javascript application/javascript application/json application/xml text/xml image/svg+xml
+  AddOutputFilterByType BROTLI_COMPRESS font/woff font/woff2 application/vnd.ms-fontobject application/x-font-ttf application/x-font-otf
+  Header append Vary Accept-Encoding
+</IfModule>
+
+# ----------------------------------------------------------------------
+# CACHE: HTML – no-cache (revalidate for crawlers & users)
+# ----------------------------------------------------------------------
+<FilesMatch "\.(html)$">
+  <IfModule mod_headers.c>
+    Header set Cache-Control "no-cache"
+  </IfModule>
+</FilesMatch>
+
+# ----------------------------------------------------------------------
+# CACHE: Assets 1 year (hashed filenames = safe long cache)
+# ----------------------------------------------------------------------
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresDefault "access plus 1 month"
+
+  ExpiresByType text/css "access plus 1 year"
+  ExpiresByType application/javascript "access plus 1 year"
+  ExpiresByType application/x-javascript "access plus 1 year"
+
+  ExpiresByType image/jpeg "access plus 1 year"
+  ExpiresByType image/jpg "access plus 1 year"
+  ExpiresByType image/png "access plus 1 year"
+  ExpiresByType image/webp "access plus 1 year"
+  ExpiresByType image/gif "access plus 1 year"
+  ExpiresByType image/svg+xml "access plus 1 year"
+  ExpiresByType image/x-icon "access plus 1 year"
+  ExpiresByType image/vnd.microsoft.icon "access plus 1 year"
+
+  ExpiresByType font/woff "access plus 1 year"
+  ExpiresByType font/woff2 "access plus 1 year"
+  ExpiresByType font/ttf "access plus 1 year"
+  ExpiresByType font/otf "access plus 1 year"
+  ExpiresByType application/vnd.ms-fontobject "access plus 1 year"
+  ExpiresByType application/x-font-woff "access plus 1 year"
+  ExpiresByType application/x-font-woff2 "access plus 1 year"
+
+  ExpiresByType application/json "access plus 1 day"
+  ExpiresByType application/xml "access plus 1 day"
+  ExpiresByType text/xml "access plus 1 day"
+</IfModule>
+
+<IfModule mod_headers.c>
+  <FilesMatch "\.(css|js|woff2?|ttf|otf|eot|png|jpe?g|gif|webp|svg|ico)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+</IfModule>
+
+# ----------------------------------------------------------------------
+# FILE HANDLING
+# ----------------------------------------------------------------------
+Options -Indexes
+
+<Files .htaccess>
+  <IfModule mod_authz_core.c>
+    Require all denied
+  </IfModule>
+  <IfModule !mod_authz_core.c>
+    Order allow,deny
+    Deny from all
+  </IfModule>
+</Files>
+
+<FilesMatch "^\.">
+  <IfModule mod_authz_core.c>
+    Require all denied
+  </IfModule>
+  <IfModule !mod_authz_core.c>
+    Order allow,deny
+    Deny from all
+  </IfModule>
+</FilesMatch>
+
+<FilesMatch "(\.(bak|config|dist|fla|inc|ini|log|psd|sh|sql|swp)|~)$">
+  <IfModule mod_authz_core.c>
+    Require all denied
+  </IfModule>
+  <IfModule !mod_authz_core.c>
+    Order allow,deny
+    Deny from all
+  </IfModule>
+</FilesMatch>
+
+# ----------------------------------------------------------------------
+# MIME TYPES
+# ----------------------------------------------------------------------
+AddType application/javascript .js
+AddType text/css .css
+AddType image/webp .webp
+AddType font/woff .woff
+AddType font/woff2 .woff2
+AddType application/vnd.ms-fontobject .eot
+AddType application/x-font-ttf .ttf
+AddType application/x-font-otf .otf
+AddType image/svg+xml .svg
+
+# ----------------------------------------------------------------------
+# ERROR PAGES
+# ----------------------------------------------------------------------
+ErrorDocument 404 /index.html
+ErrorDocument 500 /index.html
+
+# ----------------------------------------------------------------------
+# PERFORMANCE
+# ----------------------------------------------------------------------
 FileETag None
+ServerSignature Off

@@ -17,9 +17,9 @@ const Footer = () => {
 
           {/* Contacto */}
           <div>
-            <h3 className="mb-4 text-lg font-bold border-b border-secondary/50 w-fit md:border-none">
+            <h2 className="mb-4 text-lg font-bold border-b border-secondary/50 w-fit md:border-none">
               Contacto
-            </h3>
+            </h2>
             <ul className="space-y-3 text-sm text-gray-300">
               <li className="flex items-start gap-2">
                 <span className="shrink-0">📍</span> 
@@ -38,9 +38,9 @@ const Footer = () => {
 
           {/* Enlaces */}
           <div>
-            <h3 className="mb-4 text-lg font-bold border-b border-secondary/50 w-fit md:border-none">
+            <h2 className="mb-4 text-lg font-bold border-b border-secondary/50 w-fit md:border-none">
               Enlaces
-            </h3>
+            </h2>
             <ul className="space-y-3 text-sm">
               <li><a href="/" className="text-gray-300 transition-colors hover:text-white">Inicio</a></li>
               <li><a href="/servicios" className="text-gray-300 transition-colors hover:text-white">Servicios</a></li>
@@ -51,9 +51,9 @@ const Footer = () => {
 
           {/* Servicios */}
           <div>
-            <h3 className="mb-4 text-lg font-bold border-b border-secondary/50 w-fit md:border-none">
+            <h2 className="mb-4 text-lg font-bold border-b border-secondary/50 w-fit md:border-none">
               Servicios
-            </h3>
+            </h2>
             <ul className="space-y-3 text-sm text-gray-300">
               <li>Consultoría Financiera</li>
               <li>Planificación Estratégica</li>

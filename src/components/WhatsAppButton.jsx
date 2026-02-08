@@ -5,14 +5,12 @@ export function WhatsAppButton() {
   const message = 'Hola, necesito información sobre los servicios del estudio';
   const encodedMessage = encodeURIComponent(message);
 
-  const handleClick = () => {
-    // Track analytics if available
+  const handleClick = (e) => {
+    // Defer analytics so INP isn’t delayed by third-party push
     if (typeof window !== 'undefined' && window.dataLayer) {
-      window.dataLayer.push({
-        event: 'whatsapp_click',
-        event_category: 'engagement',
-        event_label: 'sticky_button'
-      });
+      const payload = { event: 'whatsapp_click', event_category: 'engagement', event_label: 'sticky_button' };
+      if (window.requestAnimationFrame) window.requestAnimationFrame(() => { window.dataLayer.push(payload); });
+      else setTimeout(() => window.dataLayer.push(payload), 0);
     }
   };
 
