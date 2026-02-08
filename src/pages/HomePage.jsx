@@ -1,5 +1,5 @@
 import { useMetaTags } from '../hooks/useMetaTags';
-import { LocalBusinessSchema } from '../components/LocalBusinessSchema';
+import { EnhancedSchema } from '../components/EnhancedSchema';
 import Hero from '../components/sections/Hero';
 import ServicesGrid from '../components/sections/ServicesGrid';
 import WhyChoose from '../components/sections/WhyChoose';
@@ -9,7 +9,7 @@ const HomePage = () => {
 
   return (
     <>
-      <LocalBusinessSchema />
+      <EnhancedSchema />
       <Hero />
       <ServicesGrid limit={4} />
       <WhyChoose />

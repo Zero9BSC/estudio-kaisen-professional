@@ -1,4 +1,5 @@
 import { useMetaTags } from '../hooks/useMetaTags';
+import { EnhancedSchema } from '../components/EnhancedSchema';
 import ContactSection from '../components/sections/ContactSection';
 import { MapPin } from 'lucide-react';
 
@@ -7,6 +8,7 @@ const ContactPage = () => {
 
   return (
     <>
+      <EnhancedSchema />
       {/* Hero - Mismo estilo que Services y About */}
       <div className="relative px-4 py-20 overflow-hidden text-white bg-gradient-to-r from-primary to-dark">
         <div className="absolute inset-0 bg-black/10"></div>

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useLayoutEffect, useRef, startTransition } from 'react';
 import { services } from '../../data/servicesData';
 import { useNavigate } from 'react-router-dom';
 import { 
@@ -14,12 +14,25 @@ import FOTO1 from '../../assets/FOTO1.png';
 import FOTO2 from '../../assets/FOTO2.png';
 import FOTO3 from '../../assets/FOTO3.png';
 import FOTO4 from '../../assets/FOTO4.png';
+import FOTO1webp from '../../assets/FOTO1.webp';
+import FOTO2webp from '../../assets/FOTO2.webp';
+import FOTO3webp from '../../assets/FOTO3.webp';
+import FOTO4webp from '../../assets/FOTO4.webp';
+
+const HERO_WIDTH = 1200;
+const HERO_HEIGHT = 600;
+
+const images = [
+  { png: FOTO1, webp: FOTO1webp },
+  { png: FOTO2, webp: FOTO2webp },
+  { png: FOTO3, webp: FOTO3webp },
+  { png: FOTO4, webp: FOTO4webp }
+];
 
 const ServicesGrid = () => {
   const displayedServices = services.slice(0, 4);
   const [activeCard, setActiveCard] = useState(0); 
   const [isAnimating, setIsAnimating] = useState(false);
-  const images = [FOTO1, FOTO2, FOTO3, FOTO4];
   const navigate = useNavigate();
   
   // Ref para el scroll automático en móvil
@@ -32,7 +45,17 @@ const ServicesGrid = () => {
     Users
   };
 
-  const slantSize = 80; 
+  const slantSize = 80;
+
+  // LCP: preload first hero image so it’s discovered early
+  useLayoutEffect(() => {
+    const link = document.createElement('link');
+    link.rel = 'preload';
+    link.as = 'image';
+    link.href = typeof FOTO1webp === 'string' ? FOTO1webp : (FOTO1webp?.default ?? FOTO1webp?.src ?? '');
+    if (link.href) document.head.appendChild(link);
+    return () => link.remove();
+  }, []);
 
   // --- 1. AUTO-PLAY LÓGICA ---
   useEffect(() => {
@@ -70,8 +93,9 @@ const ServicesGrid = () => {
   }, [activeCard]);
 
   return (
-    <section className="relative w-full h-[600px] bg-primary overflow-hidden">
-      
+    <section className="relative w-full h-[600px] bg-primary overflow-hidden" aria-labelledby="services-grid-heading">
+      <h2 id="services-grid-heading" className="sr-only">Nuestros Servicios</h2>
+
       {/* --- VERSIÓN MÓVIL (Simple, Rectangular, Deslizable) --- */}
       <div className="relative flex w-full h-full md:hidden">
         <div 
@@ -81,16 +105,25 @@ const ServicesGrid = () => {
         >
           {displayedServices.map((service, index) => {
             const IconComponent = iconComponents[service.iconName] || Target;
+            const { png, webp } = images[index];
             return (
               <div 
                 key={`mobile-${service.id}`}
                 className="relative flex-shrink-0 w-full h-full snap-start"
               >
-                <img
-                  src={images[index]}
-                  alt={service.title}
-                  className="absolute inset-0 object-cover w-full h-full"
-                />
+                <picture className="absolute inset-0 block w-full h-full">
+                  <source srcSet={webp} type="image/webp" />
+                  <img
+                    src={png}
+                    alt={service.title}
+                    width={HERO_WIDTH}
+                    height={HERO_HEIGHT}
+                    loading={index === 0 ? 'eager' : 'lazy'}
+                    decoding="async"
+                    fetchPriority={index === 0 ? 'high' : undefined}
+                    className="absolute inset-0 object-cover w-full h-full"
+                  />
+                </picture>
                 <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/60 to-transparent" />
                 
                 <div className="absolute inset-0 flex flex-col justify-end p-8 text-white">
@@ -118,7 +151,7 @@ const ServicesGrid = () => {
         </div>
 
         {/* Indicadores de puntos (Dots) para móvil */}
-        <div className="absolute z-30 flex gap-2 -translate-x-1/2 bottom-4 left-1/2">
+        <div className="absolute z-30 flex gap-2 -translate-x-1/2 bottom-4 left-1/2" aria-hidden="true">
           {displayedServices.map((_, i) => (
             <div 
               key={i} 
@@ -148,8 +181,12 @@ const ServicesGrid = () => {
           return (
             <div
               key={service.id}
-              onClick={() => setActiveCard(index)}
-              onMouseEnter={() => setActiveCard(index)}
+              role="button"
+              tabIndex={0}
+              aria-label={`Ver ${service.title}`}
+              onClick={() => startTransition(() => setActiveCard(index))}
+              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); startTransition(() => setActiveCard(index)); } }}
+              onMouseEnter={() => startTransition(() => setActiveCard(index))}
               className={`relative h-full transition-all duration-500 ease-in-out cursor-pointer overflow-hidden ${
                 isActive ? 'flex-[4]' : 'flex-[1]'
               }`}
@@ -159,14 +196,22 @@ const ServicesGrid = () => {
                 zIndex: isActive ? 10 : 0, 
               }}
             >
-              <div className="absolute inset-0 w-full h-full">
-                <img
-                  src={images[index]}
-                  alt={service.title}
-                  className={`w-full h-full object-cover transition-transform duration-1000 ${
+              <div className="absolute inset-0 w-full h-full" style={{ aspectRatio: `${HERO_WIDTH} / ${HERO_HEIGHT}` }}>
+                <picture className="block w-full h-full">
+                  <source srcSet={images[index].webp} type="image/webp" />
+                  <img
+                    src={images[index].png}
+                    alt={service.title}
+                    width={HERO_WIDTH}
+                    height={HERO_HEIGHT}
+                    loading={index === 0 ? 'eager' : 'lazy'}
+                    decoding="async"
+                    fetchPriority={index === 0 ? 'high' : undefined}
+                    className={`w-full h-full object-cover transition-transform duration-1000 ${
                     isActive ? 'scale-110' : 'scale-100 filter grayscale brightness-50'
                   }`}
-                />
+                  />
+                </picture>
                 <div className={`absolute inset-0 transition-opacity duration-500 ${
                   isActive 
                     ? 'bg-gradient-to-t from-primary via-primary/40 to-transparent opacity-90' 

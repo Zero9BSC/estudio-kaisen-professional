@@ -1,12 +1,12 @@
-import { defineConfig, loadEnv } from 'vite';
-import react from '@vitejs/plugin-react';
-import path from 'path';
-import fs from 'fs';
-import { fileURLToPath } from 'url';
+const path = require('path');
+const fs = require('fs');
+const { defineConfig, loadEnv } = require('vite');
+const react = require('@vitejs/plugin-react');
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+// Prerender deshabilitado: vite-plugin-prerender deja el proceso colgado con Puppeteer.
+// build:ssg hace el mismo build que build (SPA). Para SSG usar un prerender externo si hace falta.
 
-export default defineConfig(({ mode }) => {
+module.exports = defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
   const gtmId = env.VITE_GTM_ID || 'GTM-XXXXXX';
 
@@ -35,16 +35,10 @@ export default defineConfig(({ mode }) => {
   build: {
     rollupOptions: {
       output: {
-        assetFileNames: (assetInfo) => {
-          const name = assetInfo.name || 'asset';
-          if (/\.(woff2?)$/i.test(name)) return 'assets/fonts/[name][extname]';
-          return 'assets/[name]-[hash][extname]';
-        },
-        chunkFileNames: 'assets/[name]-[hash].js',
         manualChunks: {
           'react-vendor': ['react', 'react-dom', 'react-router-dom'],
-          'icons': ['lucide-react'],
-          'email': ['@emailjs/browser']
+          icons: ['lucide-react'],
+          email: ['@emailjs/browser']
         }
       }
     },

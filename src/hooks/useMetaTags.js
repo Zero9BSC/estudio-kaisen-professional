@@ -1,30 +1,33 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
+const SITE_BASE_URL = 'https://consultorakaisen.com.ar';
+
+// CTR-optimized meta: title <60 chars, description 140–155 chars, emotional/trust triggers, local intent (Trelew, Chubut, Patagonia)
 const routeMeta = {
   '/': {
-    title: 'Estudio Kaisen | Servicios Contables, Impositivos y Jurídicos en Trelew, Chubut',
-    description: 'Estudio profesional de contadores y abogados en Trelew. Asesoramiento contable, impositivo, legal, laboral y capacitación empresarial. +15 años de experiencia en Chubut, Patagonia.',
-    keywords: 'contador trelew, abogado trelew, estudio contable chubut, asesoramiento legal patagonia, auditoría empresarial',
-    ogImage: '/assets/FOTO1.png'
+    title: 'Contador en Trelew | Estudio Kaisen – Patagonia',
+    description: 'Asesoramiento contable y legal confiable en Trelew. +15 años de experiencia en Chubut, Patagonia. Primera consulta sin costo. Contadores y abogados expertos.',
+    keywords: 'contador trelew, abogado trelew, estudio contable chubut, estudio jurídico trelew, asesoramiento impositivo trelew, auditoría contable chubut, liquidación sueldos trelew, asesoramiento legal empresarial chubut',
+    ogImage: `${SITE_BASE_URL}/assets/FOTO1.png`
   },
   '/servicios': {
-    title: 'Servicios Profesionales | Contabilidad, Legal, Auditoría - Kaisen Trelew',
-    description: 'Consultoría financiera, planificación estratégica, asesoramiento contable-legal y capacitación empresarial. Soluciones integrales en Trelew, Chubut.',
-    keywords: 'servicios contables trelew, consultoría financiera, planificación estratégica, capacitación empresarial',
-    ogImage: '/assets/FOTO2.png'
+    title: 'Servicios Contables y Jurídicos | Estudio Kaisen – Trelew',
+    description: 'Consultoría financiera, auditoría y asesoramiento legal en Trelew. Soluciones integrales y confiables. +15 años en Chubut, Patagonia. Primera consulta sin costo.',
+    keywords: 'servicios contables trelew, consultoría financiera chubut, auditoría empresarial trelew, asesoramiento legal trelew, capacitación empresarial chubut, planificación estratégica trelew, consultoría impositiva chubut, liquidación de sueldos trelew',
+    ogImage: `${SITE_BASE_URL}/assets/FOTO2.png`
   },
   '/nosotros': {
-    title: 'Sobre Nosotros | Estudio Kaisen - Contadores y Abogados en Trelew',
-    description: 'Equipo multidisciplinario de contadores, abogados y asesores con +15 años de experiencia. Conocé nuestra misión, visión, valores y compromiso.',
-    keywords: 'estudio kaisen trelew, equipo profesional, valores empresariales',
-    ogImage: '/assets/FOTO3.png'
+    title: 'Estudio Contable Trelew, Patagonia | Nosotros – Estudio Kaisen',
+    description: 'Equipo multidisciplinario en Trelew: contadores y abogados con +15 años de experiencia. Conocé nuestra misión y valores. Confiabilidad en Chubut, Patagonia.',
+    keywords: 'estudio kaisen trelew, contadores trelew, abogados trelew, estudio contable chubut, profesionales contables trelew, estudio jurídico contable chubut',
+    ogImage: `${SITE_BASE_URL}/assets/FOTO3.png`
   },
   '/contacto': {
-    title: 'Contacto | Estudio Kaisen - 9 de Julio 128, Trelew, Chubut',
-    description: 'Contactá con nuestro estudio. Dirección: 9 de Julio 128, 1° piso A. Tel: 280 442-1137. WhatsApp: 280 436-6867. Primera consulta sin costo.',
-    keywords: 'contacto estudio kaisen, contador trelew teléfono, consulta gratuita',
-    ogImage: '/assets/FOTO4.png'
+    title: 'Contacto Trelew, Chubut | Estudio Kaisen – 9 de Julio 128',
+    description: 'Contactá con Estudio Kaisen en Trelew. 9 de Julio 128, 1° piso A. Tel: 280 442-1137. WhatsApp: 280 436-6867. Primera consulta sin costo. Atención personalizada.',
+    keywords: 'contacto estudio kaisen, contador trelew teléfono, consulta gratuita contador trelew, abogado trelew contacto, estudio contable trelew dirección',
+    ogImage: `${SITE_BASE_URL}/assets/FOTO4.png`
   }
 };
 
@@ -58,7 +61,7 @@ export function useMetaTags() {
     // Open Graph
     updateMetaTag('og:title', meta.title, true);
     updateMetaTag('og:description', meta.description, true);
-    updateMetaTag('og:url', `https://consultorakaisen.com.ar${location.pathname}`, true);
+    updateMetaTag('og:url', `${SITE_BASE_URL}${location.pathname}`, true);
     updateMetaTag('og:image', meta.ogImage, true);
     updateMetaTag('og:type', 'website', true);
     updateMetaTag('og:locale', 'es_AR', true);
@@ -82,6 +85,6 @@ export function useMetaTags() {
       canonical.setAttribute('rel', 'canonical');
       document.head.appendChild(canonical);
     }
-    canonical.setAttribute('href', `https://consultorakaisen.com.ar${location.pathname}`);
+    canonical.setAttribute('href', `${SITE_BASE_URL}${location.pathname}`);
   }, [location.pathname]);
 }
