@@ -116,6 +116,16 @@ firebase-adminsdk.json
 build/
 dist/
 out/
+*.zip
+*.rar
+*.7z
+*.tar
+*.tar.gz
+*.tar.bz2
+*.tar.xz
+*.tar.lzma
+*.tar.lz
+*.tar.lz4
 
 # Debug log
 debug.log
